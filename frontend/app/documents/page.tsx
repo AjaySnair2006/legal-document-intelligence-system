@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, DragEvent, useRef, useState } from "react";
+import Sidebar from "@/components/Sidebar";
 
 type DocumentStatus = "Processed" | "Processing" | "Failed";
 
@@ -119,18 +120,18 @@ export default function DocumentsPage() {
       Later this function will send the selected file
       to your teammate's FastAPI backend.
 
-      Example future flow:
+      Future flow:
 
       Browser
-        ↓
+          ↓
       Next.js
-        ↓
+          ↓
       FastAPI /upload
-        ↓
+          ↓
       Document processing
-        ↓
+          ↓
       RAG pipeline
-        ↓
+          ↓
       PostgreSQL
     */
   };
@@ -191,124 +192,19 @@ export default function DocumentsPage() {
 
   return (
     <main className="min-h-screen bg-[#120d10] text-white">
-      {/* =====================================================
-          SIDEBAR
-      ====================================================== */}
-      <aside className="fixed left-0 top-0 hidden h-screen w-64 flex-col border-r border-[#d6a0ae]/10 bg-[#0f0b0d] lg:flex">
-        {/* Logo */}
-        <div className="flex h-20 items-center border-b border-[#d6a0ae]/10 px-6">
-          <a href="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#d6a0ae]/30 bg-[#b9788a]/20 text-lg">
-              ⚖
-            </div>
+      {/* Reusable sidebar */}
+      <Sidebar />
 
-            <div>
-              <p className="font-semibold tracking-tight">
-                LegalAI
-              </p>
-
-              <p className="text-[9px] uppercase tracking-[0.18em] text-[#d6a0ae]/60">
-                Intelligence System
-              </p>
-            </div>
-          </a>
-        </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 px-4 py-6">
-          <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ead6dc]/30">
-            Workspace
-          </p>
-
-          <div className="space-y-1">
-            <a
-              href="/dashboard"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>⌂</span>
-              Dashboard
-            </a>
-
-            <a
-              href="/documents"
-              className="flex items-center gap-3 rounded-xl bg-[#b9788a]/15 px-3 py-3 text-sm font-medium text-[#f4e7eb]"
-            >
-              <span className="text-[#d6a0ae]">▤</span>
-              Documents
-            </a>
-
-            <a
-              href="/chat"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>◌</span>
-              AI Chat
-            </a>
-
-            <a
-              href="/summary"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>≡</span>
-              Summaries
-            </a>
-
-            <a
-              href="/compare"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>⇄</span>
-              Compare
-            </a>
-          </div>
-
-          <p className="mb-3 mt-10 px-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ead6dc]/30">
-            Account
-          </p>
-
-          <div className="space-y-1">
-            <a
-              href="#"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>⚙</span>
-              Settings
-            </a>
-
-            <a
-              href="/"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>↪</span>
-              Sign out
-            </a>
-          </div>
-        </nav>
-
-        <div className="border-t border-[#d6a0ae]/10 p-4">
-          <div className="rounded-xl border border-[#d6a0ae]/10 bg-[#171014] p-4">
-            <p className="text-xs font-medium text-[#f4e7eb]">
-              Secure document workspace
-            </p>
-
-            <p className="mt-1 text-[11px] leading-5 text-[#ead6dc]/40">
-              Upload legal documents to analyze them with
-              LegalAI.
-            </p>
-          </div>
-        </div>
-      </aside>
-
-      {/* =====================================================
-          MOBILE HEADER
-      ====================================================== */}
+      {/* Mobile header */}
       <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-[#d6a0ae]/10 bg-[#120d10]/95 px-5 backdrop-blur-xl lg:hidden">
         <a href="/dashboard" className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#b9788a]/20">
             ⚖
           </div>
 
-          <span className="font-semibold">LegalAI</span>
+          <span className="font-semibold">
+            LegalAI
+          </span>
         </a>
 
         <a
@@ -319,9 +215,7 @@ export default function DocumentsPage() {
         </a>
       </header>
 
-      {/* =====================================================
-          MAIN CONTENT
-      ====================================================== */}
+      {/* Main content */}
       <div className="lg:pl-64">
         <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:py-10">
           {/* Header */}
@@ -362,9 +256,7 @@ export default function DocumentsPage() {
             className="hidden"
           />
 
-          {/* =================================================
-              UPLOAD AREA
-          ================================================== */}
+          {/* Upload area */}
           <section className="mt-8">
             <div
               onDragOver={handleDragOver}
@@ -423,9 +315,7 @@ export default function DocumentsPage() {
             </div>
           )}
 
-          {/* =================================================
-              DOCUMENT STATISTICS
-          ================================================== */}
+          {/* Document statistics */}
           <section className="mt-8 grid gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border border-[#d6a0ae]/10 bg-[#171014] p-5">
               <p className="text-xs text-[#ead6dc]/35">
@@ -468,9 +358,7 @@ export default function DocumentsPage() {
             </div>
           </section>
 
-          {/* =================================================
-              DOCUMENT LIBRARY
-          ================================================== */}
+          {/* Document library */}
           <section className="mt-10">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
@@ -630,9 +518,7 @@ export default function DocumentsPage() {
             </div>
           </section>
 
-          {/* =================================================
-              INFORMATION
-          ================================================== */}
+          {/* Information */}
           <section className="mt-10 rounded-2xl border border-[#d6a0ae]/10 bg-[#171014]/60 p-5">
             <div className="flex gap-3">
               <span className="mt-0.5 text-sm text-[#d6a0ae]">
@@ -674,6 +560,7 @@ function formatFileSize(bytes: number) {
   }
 
   const units = ["Bytes", "KB", "MB", "GB"];
+
   const index = Math.floor(
     Math.log(bytes) / Math.log(1024),
   );
