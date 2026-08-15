@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Sidebar from "@/components/Sidebar";
 
 type Message = {
   id: number;
@@ -105,118 +106,8 @@ export default function ChatPage() {
 
   return (
     <main className="min-h-screen bg-[#120d10] text-white">
-      {/* =====================================================
-          SIDEBAR
-      ====================================================== */}
-
-      <aside className="fixed left-0 top-0 hidden h-screen w-64 flex-col border-r border-[#d6a0ae]/10 bg-[#0f0b0d] lg:flex">
-        {/* Logo */}
-
-        <div className="flex h-20 items-center border-b border-[#d6a0ae]/10 px-6">
-          <a href="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#d6a0ae]/30 bg-[#b9788a]/20 text-lg">
-              ⚖
-            </div>
-
-            <div>
-              <p className="font-semibold tracking-tight">
-                LegalAI
-              </p>
-
-              <p className="text-[9px] uppercase tracking-[0.18em] text-[#d6a0ae]/60">
-                Intelligence System
-              </p>
-            </div>
-          </a>
-        </div>
-
-        {/* Navigation */}
-
-        <nav className="flex-1 px-4 py-6">
-          <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ead6dc]/30">
-            Workspace
-          </p>
-
-          <div className="space-y-1">
-            <a
-              href="/dashboard"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>⌂</span>
-              Dashboard
-            </a>
-
-            <a
-              href="/documents"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>▤</span>
-              Documents
-            </a>
-
-            <a
-              href="/chat"
-              className="flex items-center gap-3 rounded-xl bg-[#b9788a]/15 px-3 py-3 text-sm font-medium text-[#f4e7eb]"
-            >
-              <span className="text-[#d6a0ae]">◌</span>
-              AI Chat
-            </a>
-
-            <a
-              href="/summary"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>≡</span>
-              Summaries
-            </a>
-
-            <a
-              href="/compare"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>⇄</span>
-              Compare
-            </a>
-          </div>
-
-          <p className="mb-3 mt-10 px-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ead6dc]/30">
-            Account
-          </p>
-
-          <div className="space-y-1">
-            <a
-              href="#"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>⚙</span>
-              Settings
-            </a>
-
-            <a
-              href="/"
-              className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#ead6dc]/55 transition hover:bg-[#1d1418] hover:text-white"
-            >
-              <span>↪</span>
-              Sign out
-            </a>
-          </div>
-        </nav>
-
-        {/* Sidebar bottom */}
-
-        <div className="border-t border-[#d6a0ae]/10 p-4">
-          <div className="rounded-xl border border-[#d6a0ae]/10 bg-[#171014] p-4">
-            <p className="text-xs font-medium text-[#f4e7eb]">
-              RAG Assistant
-            </p>
-
-            <p className="mt-1 text-[11px] leading-5 text-[#ead6dc]/40">
-              Ask questions and receive answers with document
-              citations.
-            </p>
-          </div>
-        </div>
-      </aside>
+      {/* Reusable Sidebar */}
+      <Sidebar />
 
       {/* =====================================================
           MAIN AREA
