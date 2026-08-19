@@ -1,6 +1,6 @@
-from app.services.embedding_service import EmbeddingService
-from app.services.vector_store import VectorStore
-from app.services.gemini_service import generate_answer
+from backend.app.services.embedding_service import EmbeddingService
+from backend.app.services.vector_store import VectorStore
+from backend.app.services.gemini_service import generate_answer
 
 
 class RAGService:

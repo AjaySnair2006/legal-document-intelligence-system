@@ -1,7 +1,7 @@
-from app.services.document_processor import extract_text
-from app.services.chunker import chunk_text
-from app.services.embedding_service import EmbeddingService
-from app.services.vector_store import VectorStore
+from backend.app.services.document_processor import extract_text
+from backend.app.services.chunker import chunk_text
+from backend.app.services.embedding_service import EmbeddingService
+from backend.app.services.vector_store import VectorStore
 
 
 class IngestionService:

@@ -5,8 +5,8 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import BaseModel
 
-from app.services.rag_service import RAGService
-from app.services.ingestion_service import IngestionService
+from backend.app.services.rag_service import RAGService
+from backend.app.services.ingestion_service import IngestionService
 
 
 app = FastAPI(
@@ -20,7 +20,10 @@ class QuestionRequest(BaseModel):
     question: str
 
 
-UPLOAD_DIR = Path("../data/uploads")
+# Project root/data/uploads
+BASE_DIR = Path(__file__).resolve().parents[2]
+UPLOAD_DIR = BASE_DIR / "data" / "uploads"
+
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
