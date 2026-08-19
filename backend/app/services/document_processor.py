@@ -1,4 +1,4 @@
-from pathlib import Path
+import os
 
 from pypdf import PdfReader
 from docx import Document
@@ -14,7 +14,16 @@ def extract_pdf_text(file_path: str) -> list[dict]:
     pages = []
 
     for page_number, page in enumerate(reader.pages, start=1):
-        text = page.extract_text() or ""
+
+        try:
+            text = page.extract_text() or ""
+
+        except Exception as e:
+            print(
+                f"Warning: Could not extract page "
+                f"{page_number}: {e}"
+            )
+            text = ""
 
         pages.append({
             "page_number": page_number,
@@ -34,30 +43,26 @@ def extract_docx_text(file_path: str) -> list[dict]:
     text_parts = []
 
     for paragraph in document.paragraphs:
+
         text = paragraph.text.strip()
 
         if text:
             text_parts.append(text)
 
-    full_text = "\n".join(text_parts)
+    text = "\n".join(text_parts)
 
-    return [
-        {
-            "page_number": None,
-            "text": full_text
-        }
-    ]
+    return [{
+        "page_number": 1,
+        "text": text
+    }]
 
 
 def extract_text(file_path: str) -> list[dict]:
     """
-    Automatically choose the correct extractor
-    based on the document extension.
+    Extract text from a supported document.
     """
 
-    path = Path(file_path)
-
-    extension = path.suffix.lower()
+    extension = os.path.splitext(file_path)[1].lower()
 
     if extension == ".pdf":
         return extract_pdf_text(file_path)

@@ -1,7 +1,10 @@
+import uuid
+
 import chromadb
 
 
 class VectorStore:
+
     def __init__(self, db_path: str = "backend/chroma_db"):
         self.client = chromadb.PersistentClient(path=db_path)
 
@@ -12,24 +15,35 @@ class VectorStore:
     def add_chunks(
         self,
         chunks: list[dict],
-        embeddings: list[list[float]]
+        embeddings: list[list[float]],
+        document_id: str | None = None
     ):
         """
-        Store document chunks and their embeddings in ChromaDB.
+        Store document chunks and embeddings in ChromaDB.
+
+        Each document gets a unique ID so multiple documents
+        can be stored without duplicate chunk IDs.
         """
+
+        if document_id is None:
+            document_id = str(uuid.uuid4())
 
         ids = []
         documents = []
         metadatas = []
 
-        for i, chunk in enumerate(chunks):
+        for chunk in chunks:
 
             chunk_id = str(chunk["chunk_id"])
 
-            ids.append(chunk_id)
+            # Unique ID for this document's chunk
+            unique_id = f"{document_id}_chunk_{chunk_id}"
+
+            ids.append(unique_id)
             documents.append(chunk["text"])
 
             metadatas.append({
+                "document_id": document_id,
                 "page_number": chunk.get("page_number"),
                 "chunk_id": chunk_id
             })
@@ -40,6 +54,8 @@ class VectorStore:
             embeddings=embeddings,
             metadatas=metadatas
         )
+
+        return document_id
 
     def search(
         self,
