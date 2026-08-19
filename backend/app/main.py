@@ -3,6 +3,7 @@ import shutil
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from backend.app.services.rag_service import RAGService
@@ -16,16 +17,43 @@ app = FastAPI(
 )
 
 
+# ============================================================
+# CORS
+# ============================================================
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# ============================================================
+# REQUEST MODELS
+# ============================================================
+
 class QuestionRequest(BaseModel):
     question: str
 
 
-# Project root/data/uploads
+# ============================================================
+# UPLOAD DIRECTORY
+# ============================================================
+
 BASE_DIR = Path(__file__).resolve().parents[2]
 UPLOAD_DIR = BASE_DIR / "data" / "uploads"
 
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
+
+# ============================================================
+# ROOT
+# ============================================================
 
 @app.get("/")
 def root():
@@ -34,12 +62,20 @@ def root():
     }
 
 
+# ============================================================
+# HEALTH CHECK
+# ============================================================
+
 @app.get("/health")
 def health():
     return {
         "status": "healthy"
     }
 
+
+# ============================================================
+# ASK QUESTION
+# ============================================================
 
 @app.post("/ask")
 def ask_question(request: QuestionRequest):
@@ -63,6 +99,10 @@ def ask_question(request: QuestionRequest):
             detail=str(e)
         )
 
+
+# ============================================================
+# UPLOAD DOCUMENT
+# ============================================================
 
 @app.post("/upload")
 async def upload_document(file: UploadFile = File(...)):
